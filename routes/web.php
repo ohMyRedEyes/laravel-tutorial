@@ -13,44 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    $tasks = [
-        'Go to the store',
-        'Go to the market',
-        'Go to work',
-    ];
+Route::get('/', 'PagesController@home');
 
-    return view('welcome', [
-        'tasks' => $tasks,
-        'foo' => 'Awesome',
-        'req' => request('title'),  // value taken from address bar '?title=SomeTitle'
-    ]);
+Route::get('/about', 'PagesController@about');
 
-    //another ways to return the same
-    return view('welcome')->withTasks($tasks)->withFoo('Awesome');  //'with' will be removed and the rest will
-                                                                    // become a lowecase variable name
-    
-    return view('welcome')->withTasks([
-        'Go to the store',
-        'Go to the market',
-        'Go to work',
-    ]);
-
-    return view('welcome')->with([
-        'tasks' => [
-            'Go to the store',
-            'Go to the market',
-            'Go to work',
-        ],
-        'foo' => 'Awesome',
-        'req' => request('title'),
-    ]);
-});
-
-Route::get('/about', function () {
-    return view('about');
-});
-
-Route::get('/contact', function () {
-    return view('contact');
-});
+Route::get('/contact', 'PagesController@contact');
