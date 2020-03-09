@@ -9,9 +9,15 @@
 <body>
     <h1>Projects</h1>
     <ul>
-    @foreach ($projects as $prj)
-        <li>{{$prj->title}}</li>
-    @endforeach
+        @foreach ($projects as $prj)
+            <li>
+                <a href="/projects/{{ $prj->id }}">
+                    {{ $prj->title }}
+                </a>
+            </li>
+        @endforeach
     </ul>
+
+    <a href="/projects/create">Create</a> a new project
 </body>
 </html>

@@ -28,53 +28,63 @@ class ProjectsController extends Controller
 
     public function store()
     {
-        $project = new Project();
+        /*$project = new Project();
 
         $project->title = request('title');
         $project->description = request('description');
 
-        $project->save();
+        $project->save();*/
+
+        // lines above can be rewritten as follows:
+        /*Project::create([
+            'title' => request('title'),
+            'description' => request('description')
+        ]);*/
+        // but to do like this we have to add title and description as fillable properties in App\Project
+        // to prevent other parameters to be passed, i.e. an id of a project (if someone modifies a form in a browser)
+        
+        // also given the fact below
+        /*
+            [
+                'title' => request('title'),
+                'description' => request('description')
+            ]
+            is the same as 
+            request(['title', 'description'])
+        */
+        // we can do like this:
+        Project::create(request(['title', 'description']));
 
         return redirect('/projects');
     }
 
-    public function edit($id) // example.com/projects/1/edit
+    public function edit(Project $project) // example.com/projects/1/edit
     {
-        $project = Project::findOrFail($id);
         return view('projects.edit', compact('project'));
     }
 
-    public function update($id)
+    public function update(Project $project)
     {
-        $project = Project::findOrFail($id);
-
-        $project->title = request('title');
+        /*$project->title = request('title');
         $project->description = request('description');
 
-        $project->save();
+        $project->save();*/
+
+        // given the info in the store() method we can write the lines above like
+        $project->update(request(['title', 'description']));
 
         return redirect('/projects');
     }
 
-    public function destroy($id)
+    public function destroy(Project $project)
     {
-        $project = Project::findOrFail($id)->delete();
-
-        return redirect('/projects');
-    }
-
-    public function show()
-    {
+        $project->delete();
         
+        return redirect('/projects');
     }
 
-    private function save_and_redirect_to_index(Project $project)
+    public function show(Project $project)
     {
-        $project->title = request('title');
-        $project->description = request('description');
-
-        $project->save();
-
-        return redirect('/projects');
+        return view('projects.show', compact('project'));
     }
 }
