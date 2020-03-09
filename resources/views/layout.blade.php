@@ -7,12 +7,16 @@
     <title>@yield('title', 'Laravel tutorial')</title>
 </head>
 <body>
-    <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/about">About Us</a></li>
-        <li><a href="/contact">Contact</a></li>
-        <li><a href="/projects">Projects</a></li>
-    </ul>
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/projects">Projects</a></li>
+        </ul>
+    </div>
+
+    <br>
 
     <div class="container">
         @yield('content')
