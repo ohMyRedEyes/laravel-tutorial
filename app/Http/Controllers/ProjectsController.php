@@ -28,6 +28,23 @@ class ProjectsController extends Controller
 
     public function store()
     {
+        // perform a data validation
+        $validatedFields = request()->validate([
+            'title' => 'required|min:3|max:255',
+            'description' => ['required', 'min:3']
+        ]);
+        // if it fails we will be redirected to the previous page
+        // More info on available validation rules at
+        // https://laravel.com/docs/6.x/validation#available-validation-rules
+        // $validatedFields would be
+        /*
+            [
+                $title => 'title,
+                $description => 'description,
+            ]
+        */
+        
+        // now let's create a new record in database using Project model
         /*$project = new Project();
 
         $project->title = request('title');
@@ -53,7 +70,11 @@ class ProjectsController extends Controller
             request(['title', 'description'])
         */
         // we can do like this:
-        Project::create(request(['title', 'description']));
+        // Project::create(request(['title', 'description']));
+
+        // and as we have $validatedFields after performing validation
+        // we can do another way:
+        Project::create($validatedFields);
 
         return redirect('/projects');
     }
